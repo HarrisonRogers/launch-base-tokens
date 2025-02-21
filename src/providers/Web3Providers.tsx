@@ -17,7 +17,6 @@ const config = getDefaultConfig({
   transports: {
     [baseSepolia.id]: http(),
   },
-  // ssr: true, // If your dApp uses server side rendering (SSR)
 });
 
 export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
