@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import ConnectWallet from '@/components/connectWallet';
 import Providers from '@/providers/providers';
+import Footer from '@/components/footer';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -16,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Create Base Tokens',
-  description: 'Create Base tokens on Base Sepolia with ease',
+  description: 'Create Base tokens on Base Sepolia with easeeeeeee',
 };
 
 export default function RootLayout({
@@ -31,7 +32,10 @@ export default function RootLayout({
       >
         <Providers>
           <ConnectWallet />
-          <div className="container mt-28 mx-5 md:mx-auto">{children}</div>
+          <div className="container mt-14 md:mt-28 px-4 md:px-6 mx-auto">
+            {children}
+          </div>
+          <Footer />
         </Providers>
       </body>
     </html>
