@@ -9,8 +9,6 @@ import '@rainbow-me/rainbowkit/styles.css';
 // Create the query client outside of the component
 const queryClient = new QueryClient();
 
-console.log('ProjectID:', process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID);
-
 // Create the Wagmi config
 const config = getDefaultConfig({
   appName: 'Create Base Tokens',

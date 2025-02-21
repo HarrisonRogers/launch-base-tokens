@@ -31,9 +31,7 @@ export default function RootLayout({
       >
         <Providers>
           <ConnectWallet />
-          <div className="container mt-28 mx-5 md:mx-auto flex flex-col items-center justify-center">
-            {children}
-          </div>
+          <div className="container mt-28 mx-5 md:mx-auto">{children}</div>
         </Providers>
       </body>
     </html>
