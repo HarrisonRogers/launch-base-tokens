@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { z } from 'zod';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import TokenFactory from '@/lib/TokenFactory.json';
 import { Input } from '../ui/input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
+import { useWriteContract } from 'wagmi';
 
 const createTokenSchema = z.object({
   name: z.string().min(2, {
@@ -29,19 +31,35 @@ const createTokenSchema = z.object({
 type FormSchema = z.infer<typeof createTokenSchema>;
 
 function CreateToken() {
-  const [error, setError] = useState<string | null>(null);
-  const [isPending, setIsPending] = useState(false);
-
+  const {
+    writeContract,
+    isPending,
+    isSuccess,
+    isError,
+    data: txHash,
+  } = useWriteContract();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormSchema>({
     resolver: zodResolver(createTokenSchema),
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    try {
+      console.log(data);
+      writeContract({
+        address: process.env.NEXT_PUBLIC_TOKEN_FACTORY_ADDRESS as `0x${string}`,
+        abi: TokenFactory.abi,
+        functionName: 'createToken',
+        args: [data.name, data.symbol, data.supply],
+      });
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   return (
@@ -87,6 +105,13 @@ function CreateToken() {
           <Button type="submit" disabled={isPending} loading={isPending}>
             {isPending ? 'Creating...' : 'Create Token'}
           </Button>
+
+          {isError && <p className="text-red-500">Why did you cancel 😔</p>}
+          {isSuccess && txHash && (
+            <p className="text-green-500">
+              Token created successfully at {txHash}
+            </p>
+          )}
         </form>
       </CardContent>
     </Card>
