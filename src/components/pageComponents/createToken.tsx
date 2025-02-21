@@ -49,7 +49,6 @@ function CreateToken() {
 
   const onSubmit = handleSubmit((data) => {
     try {
-      console.log(data);
       writeContract({
         address: process.env.NEXT_PUBLIC_TOKEN_FACTORY_ADDRESS as `0x${string}`,
         abi: TokenFactory.abi,

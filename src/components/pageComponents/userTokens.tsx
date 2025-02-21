@@ -36,7 +36,7 @@ function UserTokens() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tokens?.map((token: `0x${string}`) => (
+            {tokens?.sort().map((token: `0x${string}`) => (
               <TableRow key={token}>
                 <TableCell>
                   <Link
