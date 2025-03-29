@@ -80,101 +80,103 @@ function PaginatedTokens({ tokens }: { tokens: address[] | undefined }) {
       </Table>
 
       {/* Pagination Controls */}
-      <Pagination className="mt-4">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              onClick={() => handlePageChange(currentPage - 1)}
-              className={
-                currentPage === 1 ? 'pointer-events-none opacity-50' : ''
-              }
-            />
-          </PaginationItem>
-          {(() => {
-            const pages = [];
+      {totalPages > 1 && (
+        <Pagination className="mt-4">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                onClick={() => handlePageChange(currentPage - 1)}
+                className={
+                  currentPage === 1 ? 'pointer-events-none opacity-50' : ''
+                }
+              />
+            </PaginationItem>
+            {(() => {
+              const pages = [];
 
-            // Always show first page
-            pages.push(
-              <PaginationItem key={1}>
-                <PaginationLink
-                  href="#"
-                  onClick={() => handlePageChange(1)}
-                  isActive={currentPage === 1}
-                >
-                  1
-                </PaginationLink>
-              </PaginationItem>
-            );
-
-            // Add ellipsis after first page if needed
-            if (currentPage > 4) {
+              // Always show first page
               pages.push(
-                <PaginationItem key="ellipsis1">
-                  <PaginationEllipsis />
-                </PaginationItem>
-              );
-            }
-
-            // Show pages around current page
-            for (
-              let i = Math.max(2, currentPage - 1);
-              i <= Math.min(totalPages - 1, currentPage + 1);
-              i++
-            ) {
-              pages.push(
-                <PaginationItem key={i}>
+                <PaginationItem key={1}>
                   <PaginationLink
                     href="#"
-                    onClick={() => handlePageChange(i)}
-                    isActive={currentPage === i}
+                    onClick={() => handlePageChange(1)}
+                    isActive={currentPage === 1}
                   >
-                    {i}
+                    1
                   </PaginationLink>
                 </PaginationItem>
               );
-            }
 
-            // Add ellipsis before last page if needed
-            if (currentPage < totalPages - 3) {
-              pages.push(
-                <PaginationItem key="ellipsis2">
-                  <PaginationEllipsis />
-                </PaginationItem>
-              );
-            }
-
-            // Always show last page if there is more than one page
-            if (totalPages > 1) {
-              pages.push(
-                <PaginationItem key={totalPages}>
-                  <PaginationLink
-                    href="#"
-                    onClick={() => handlePageChange(totalPages)}
-                    isActive={currentPage === totalPages}
-                  >
-                    {totalPages}
-                  </PaginationLink>
-                </PaginationItem>
-              );
-            }
-
-            return pages;
-          })()}
-
-          <PaginationItem>
-            <PaginationNext
-              href="#"
-              onClick={() => handlePageChange(currentPage + 1)}
-              className={
-                currentPage === totalPages
-                  ? 'pointer-events-none opacity-50'
-                  : ''
+              // Add ellipsis after first page if needed
+              if (currentPage > 4) {
+                pages.push(
+                  <PaginationItem key="ellipsis1">
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                );
               }
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+
+              // Show pages around current page
+              for (
+                let i = Math.max(2, currentPage - 1);
+                i <= Math.min(totalPages - 1, currentPage + 1);
+                i++
+              ) {
+                pages.push(
+                  <PaginationItem key={i}>
+                    <PaginationLink
+                      href="#"
+                      onClick={() => handlePageChange(i)}
+                      isActive={currentPage === i}
+                    >
+                      {i}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              }
+
+              // Add ellipsis before last page if needed
+              if (currentPage < totalPages - 3) {
+                pages.push(
+                  <PaginationItem key="ellipsis2">
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                );
+              }
+
+              // Always show last page if there is more than one page
+              if (totalPages > 1) {
+                pages.push(
+                  <PaginationItem key={totalPages}>
+                    <PaginationLink
+                      href="#"
+                      onClick={() => handlePageChange(totalPages)}
+                      isActive={currentPage === totalPages}
+                    >
+                      {totalPages}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              }
+
+              return pages;
+            })()}
+
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                onClick={() => handlePageChange(currentPage + 1)}
+                className={
+                  currentPage === totalPages
+                    ? 'pointer-events-none opacity-50'
+                    : ''
+                }
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 }

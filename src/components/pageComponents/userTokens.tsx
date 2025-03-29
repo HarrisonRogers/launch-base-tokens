@@ -15,7 +15,7 @@ import Link from 'next/link';
 
 function UserTokens() {
   const tokens = useUserTokens();
-  const orderedTokens = tokens ? [...tokens].reverse() : [];
+  const orderedTokens = tokens ? [...tokens].reverse().slice(0, 5) : [];
 
   return (
     <Card>
@@ -43,6 +43,18 @@ function UserTokens() {
                 </TableCell>
               </TableRow>
             ))}
+            {orderedTokens?.length > 0 && (
+              <TableRow>
+                <TableCell>
+                  <Link
+                    href="/your-tokens"
+                    className="underline hover:no-underline underline-offset-2 text-blue-500"
+                  >
+                    View All
+                  </Link>
+                </TableCell>
+              </TableRow>
+            )}
             {orderedTokens?.length === 0 && (
               <TableRow>
                 <TableCell colSpan={2}>Loading Tokens...</TableCell>

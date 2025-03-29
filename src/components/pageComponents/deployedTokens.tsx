@@ -52,16 +52,18 @@ function DeployedTokens() {
                 </TableCell>
               </TableRow>
             ))}
-            <TableRow>
-              <TableCell>
-                <Link
-                  href="/all-tokens"
-                  className="underline hover:no-underline underline-offset-2 text-blue-500"
-                >
-                  View All
-                </Link>
-              </TableCell>
-            </TableRow>
+            {shortenedTokens?.length > 0 && (
+              <TableRow>
+                <TableCell>
+                  <Link
+                    href="/all-tokens"
+                    className="underline hover:no-underline underline-offset-2 text-blue-500"
+                  >
+                    View All
+                  </Link>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </CardContent>
