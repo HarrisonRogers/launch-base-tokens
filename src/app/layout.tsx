@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import ConnectWallet from '@/components/connectWallet';
 import Providers from '@/providers/providers';
 import Footer from '@/components/footer';
+import Navbar from '@/components/navbar';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,7 +31,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <ConnectWallet />
+          <Navbar />
+
           <div className="container mt-14 md:mt-28 px-4 md:px-6 mx-auto">
             {children}
           </div>
