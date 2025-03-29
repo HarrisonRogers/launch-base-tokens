@@ -101,7 +101,7 @@ function CreateToken() {
               <p className="text-red-500">{errors.supply.message}</p>
             )}
           </div>
-          <Button type="submit" disabled={isPending} loading={isPending}>
+          <Button type="submit" disabled={isPending}>
             {isPending ? 'Creating...' : 'Create Token'}
           </Button>
 
