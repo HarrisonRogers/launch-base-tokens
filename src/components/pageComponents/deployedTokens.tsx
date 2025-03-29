@@ -10,16 +10,11 @@ import {
   TableHeader,
   TableRow,
 } from '../ui/table';
-import { useReadContract } from 'wagmi';
-import TokenFactory from '@/lib/TokenFactory.json';
 import Link from 'next/link';
-
+import { useGetDeployedTokens } from '@/smart-functions/getDeployedTokens';
 function DeployedTokens() {
-  const { data: tokens } = useReadContract({
-    address: TokenFactory.address as `0x${string}`,
-    abi: TokenFactory.abi,
-    functionName: 'getDeployedTokens',
-  }) as { data: `0x${string}`[] };
+  const tokens = useGetDeployedTokens();
+  const shortenedTokens = tokens?.sort().slice(0, 5);
 
   return (
     <Card>
@@ -34,7 +29,7 @@ function DeployedTokens() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tokens?.sort().map((token: `0x${string}`) => (
+            {shortenedTokens?.map((token: `0x${string}`) => (
               <TableRow key={token}>
                 <TableCell>
                   <Link
@@ -47,6 +42,16 @@ function DeployedTokens() {
                 </TableCell>
               </TableRow>
             ))}
+            <TableRow>
+              <TableCell>
+                <Link
+                  href="/all-tokens"
+                  className="underline hover:no-underline underline-offset-2 text-blue-500"
+                >
+                  View All
+                </Link>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </CardContent>

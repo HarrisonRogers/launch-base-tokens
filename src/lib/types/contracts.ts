@@ -1,5 +1,7 @@
+export type address = `0x${string}`;
+
 export type TokenFactoryContract = {
-  address: `0x${string}`;
+  address: address;
   abi: typeof import('../TokenFactory.json')['abi'];
 };
 
@@ -10,19 +12,19 @@ export type CreateTokenParams = {
 };
 
 export type TokenCreatedEvent = {
-  tokenAddress: `0x${string}`;
+  tokenAddress: address;
   name: string;
   symbol: string;
   supply: bigint;
-  owner: `0x${string}`;
+  owner: address;
 };
 
 export type DeployedToken = {
-  address: `0x${string}`;
+  address: address;
 };
 
 export interface ITokenFactory {
   createToken: (params: CreateTokenParams) => Promise<void>;
   getDeployedTokens: () => Promise<DeployedToken[]>;
-  getUserTokens: (address: `0x${string}`) => Promise<DeployedToken[]>;
+  getUserTokens: (address: address) => Promise<DeployedToken[]>;
 }

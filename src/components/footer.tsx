@@ -8,9 +8,10 @@ function Footer() {
         Made with ❤️ by{' '}
         <Link
           href="https://github.com/HarrisonRogers"
+          target="_blank"
           className="underline underline-offset-2 hover:no-underline"
         >
-          Hazzaboy135
+          HarrisonRogers
         </Link>
       </p>
     </div>
