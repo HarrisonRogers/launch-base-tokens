@@ -5,7 +5,7 @@ import { useGetDeployedTokens } from '@/smart-functions/getDeployedTokens';
 import PaginatedTokens from '@/components/pageComponents/paginatedTokens';
 
 function ViewAllTokensPage() {
-  const tokens = useGetDeployedTokens().sort();
+  const tokens = useGetDeployedTokens();
   return (
     <div>
       <h1 className="text-center">All Tokens</h1>
