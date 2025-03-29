@@ -10,14 +10,20 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { useWriteContract } from 'wagmi';
+import Link from 'next/link';
 
 const createTokenSchema = z.object({
   name: z.string().min(2, {
     message: 'Name must be at least 2 characters.',
   }),
-  symbol: z.string().min(2, {
-    message: 'Symbol must be at least 2 characters.',
-  }),
+  symbol: z
+    .string()
+    .min(2, {
+      message: 'Symbol must be at least 2 characters.',
+    })
+    .max(5, {
+      message: 'Symbol must be less than 5 characters.',
+    }),
   supply: z
     .string()
     .transform((val) => Number(val))
@@ -76,7 +82,7 @@ function CreateToken() {
               {...register('name')}
             />
             {errors.name && (
-              <p className="text-red-500">{errors.name.message}</p>
+              <p className="text-red-500 mt-2">{errors.name.message}</p>
             )}
           </div>
           <div>
@@ -87,7 +93,7 @@ function CreateToken() {
               {...register('symbol')}
             />
             {errors.symbol && (
-              <p className="text-red-500">{errors.symbol.message}</p>
+              <p className="text-red-500 mt-2">{errors.symbol.message}</p>
             )}
           </div>
           <div>
@@ -98,7 +104,7 @@ function CreateToken() {
               {...register('supply')}
             />
             {errors.supply && (
-              <p className="text-red-500">{errors.supply.message}</p>
+              <p className="text-red-500 mt-2">{errors.supply.message}</p>
             )}
           </div>
           <Button type="submit" disabled={isPending}>
@@ -107,9 +113,16 @@ function CreateToken() {
 
           {isError && <p className="text-red-500">Why did you cancel 😔</p>}
           {isSuccess && txHash && (
-            <p className="text-green-500">
-              Token created successfully at {txHash}
-            </p>
+            <span className="text-green-500">
+              Token created successfully at{' '}
+              <Link
+                href={`https://base-sepolia.blockscout.com/tx/${txHash}`}
+                target="_blank"
+                className="underline hover:no-underline"
+              >
+                {txHash}
+              </Link>
+            </span>
           )}
         </form>
       </CardContent>

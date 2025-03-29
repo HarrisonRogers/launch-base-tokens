@@ -1,7 +1,7 @@
 import { useReadContract } from 'wagmi';
 import TokenFactory from '@/lib/TokenFactory.json';
 
-export const useGetDeployedTokens = () => {
+export const useDeployedTokens = () => {
   const { data: tokens } = useReadContract({
     address: TokenFactory.address as `0x${string}`,
     abi: TokenFactory.abi,

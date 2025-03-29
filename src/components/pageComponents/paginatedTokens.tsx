@@ -45,7 +45,9 @@ function PaginatedTokens({ tokens }: { tokens: address[] | undefined }) {
   // Get current page items
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentPageTokens = tokens.sort().slice(startIndex, endIndex);
+  const currentPageTokens = tokens
+    ? [...tokens].reverse().slice(startIndex, endIndex)
+    : [];
 
   // Handle page change
   const handlePageChange = (page: number) => {

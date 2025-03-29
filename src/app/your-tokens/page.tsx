@@ -4,7 +4,7 @@ import React from 'react';
 import { useDeployedTokens } from '@/hooks/useDeployedTokens';
 import PaginatedTokens from '@/components/pageComponents/paginatedTokens';
 
-function ViewAllTokensPage() {
+function ViewYourTokensPage() {
   const tokens = useDeployedTokens();
   return (
     <div>
@@ -14,4 +14,4 @@ function ViewAllTokensPage() {
   );
 }
 
-export default ViewAllTokensPage;
+export default ViewYourTokensPage;

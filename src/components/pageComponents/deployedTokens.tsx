@@ -11,10 +11,10 @@ import {
   TableRow,
 } from '../ui/table';
 import Link from 'next/link';
-import { useGetDeployedTokens } from '@/smart-functions/getDeployedTokens';
+import { useDeployedTokens } from '@/hooks/useDeployedTokens';
 function DeployedTokens() {
-  const tokens = useGetDeployedTokens();
-  const shortenedTokens = tokens?.sort().slice(0, 5);
+  const tokens = useDeployedTokens();
+  const shortenedTokens = tokens ? [...tokens].reverse().slice(0, 5) : [];
 
   return (
     <Card>
@@ -29,6 +29,16 @@ function DeployedTokens() {
             </TableRow>
           </TableHeader>
           <TableBody>
+            {shortenedTokens?.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={2}>Loading Tokens...</TableCell>
+              </TableRow>
+            )}
+            {shortenedTokens === undefined && (
+              <TableRow>
+                <TableCell colSpan={2}>No tokens found</TableCell>
+              </TableRow>
+            )}
             {shortenedTokens?.map((token: `0x${string}`) => (
               <TableRow key={token}>
                 <TableCell>

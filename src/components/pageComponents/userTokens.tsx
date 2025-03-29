@@ -10,18 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from '../ui/table';
-import { useAccount, useReadContract } from 'wagmi';
-import TokenFactory from '@/lib/TokenFactory.json';
+import { useUserTokens } from '@/hooks/useUserTokens';
 import Link from 'next/link';
 
 function UserTokens() {
-  const { address } = useAccount();
-  const { data: tokens } = useReadContract({
-    address: process.env.NEXT_PUBLIC_TOKEN_FACTORY_ADDRESS as `0x${string}`,
-    abi: TokenFactory.abi,
-    functionName: 'getUserTokens',
-    args: [address],
-  }) as { data: `0x${string}`[] };
+  const tokens = useUserTokens();
+  const orderedTokens = tokens ? [...tokens].reverse() : [];
 
   return (
     <Card>
@@ -36,7 +30,7 @@ function UserTokens() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tokens?.sort().map((token: `0x${string}`) => (
+            {orderedTokens?.map((token: `0x${string}`) => (
               <TableRow key={token}>
                 <TableCell>
                   <Link
@@ -49,7 +43,13 @@ function UserTokens() {
                 </TableCell>
               </TableRow>
             ))}
-            {tokens?.length === 0 && (
+            {orderedTokens?.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={2}>Loading Tokens...</TableCell>
+              </TableRow>
+            )}
+
+            {orderedTokens === undefined && (
               <TableRow>
                 <TableCell colSpan={2}>No tokens found</TableCell>
               </TableRow>
