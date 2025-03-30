@@ -29,12 +29,12 @@ function TokenList({ title, tokens }: TokenListProps) {
           <TableBody>
             {tokens?.length === 0 && (
               <TableRow>
-                <TableCell colSpan={2}>Loading Tokens...</TableCell>
+                <TableCell colSpan={2}>No Tokens Found</TableCell>
               </TableRow>
             )}
             {tokens === undefined && (
               <TableRow>
-                <TableCell colSpan={2}>No tokens found</TableCell>
+                <TableCell colSpan={2}>Loading...</TableCell>
               </TableRow>
             )}
             {tokens?.map((token: address) => (

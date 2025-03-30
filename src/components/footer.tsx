@@ -3,7 +3,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <div className="flex justify-center items-center mt-10 md:mt-20">
+    <div className="flex justify-center items-center mt-10 mb-5 md:mt-20">
       <p>
         Made with ❤️ by{' '}
         <Link
