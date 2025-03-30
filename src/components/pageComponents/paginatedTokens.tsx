@@ -19,9 +19,13 @@ import {
   PaginationEllipsis,
 } from '../ui/pagination';
 
+type PaginatedTokensProps = {
+  tokens: address[] | undefined;
+};
+
 const ITEMS_PER_PAGE = 5;
 
-function PaginatedTokens({ tokens }: { tokens: address[] | undefined }) {
+function PaginatedTokens({ tokens }: PaginatedTokensProps) {
   const [currentPage, setCurrentPage] = useState(1);
 
   if (tokens === undefined) {

@@ -11,9 +11,10 @@ import { address } from '@/lib/types/contracts';
 type TokenListProps = {
   title: string;
   tokens: address[];
+  deployed?: boolean;
 };
 
-function TokenList({ title, tokens }: TokenListProps) {
+function TokenList({ title, tokens, deployed = true }: TokenListProps) {
   return (
     <Card>
       <CardHeader>
@@ -54,7 +55,7 @@ function TokenList({ title, tokens }: TokenListProps) {
               <TableRow>
                 <TableCell>
                   <Link
-                    href="/all-tokens"
+                    href={deployed ? '/all-tokens' : '/your-tokens'}
                     className="underline hover:no-underline underline-offset-2 text-blue-500"
                   >
                     View All
