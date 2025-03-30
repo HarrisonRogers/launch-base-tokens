@@ -11,7 +11,7 @@ import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { useWriteContract } from 'wagmi';
 import Link from 'next/link';
-
+import { useRouter } from 'next/navigation';
 const createTokenSchema = z.object({
   name: z.string().min(2, {
     message: 'Name must be at least 2 characters.',
@@ -37,6 +37,7 @@ const createTokenSchema = z.object({
 type FormSchema = z.infer<typeof createTokenSchema>;
 
 function CreateToken() {
+  const router = useRouter();
   const {
     writeContract,
     isPending,
@@ -44,6 +45,7 @@ function CreateToken() {
     isError,
     data: txHash,
   } = useWriteContract();
+
   const {
     register,
     handleSubmit,
@@ -66,6 +68,10 @@ function CreateToken() {
       console.log(error);
     }
   });
+
+  if (isSuccess) {
+    router.refresh();
+  }
 
   return (
     <Card>
@@ -111,18 +117,24 @@ function CreateToken() {
             {isPending ? 'Creating...' : 'Create Token'}
           </Button>
 
-          {isError && <p className="text-red-500">Why did you cancel 😔</p>}
+          {isError && (
+            <p className="text-red-500">
+              Sorry but no 😔 (probably need to connect wallet)
+            </p>
+          )}
           {isSuccess && txHash && (
-            <span className="text-green-500">
-              Token created successfully at{' '}
-              <Link
-                href={`https://base-sepolia.blockscout.com/tx/${txHash}`}
-                target="_blank"
-                className="underline hover:no-underline"
-              >
-                {txHash}
-              </Link>
-            </span>
+            <div className="flex flex-col gap-2">
+              <span className="text-green-500">
+                Transaction submitted:{' '}
+                <Link
+                  href={`https://base-sepolia.blockscout.com/tx/${txHash}`}
+                  target="_blank"
+                  className="underline hover:no-underline"
+                >
+                  {txHash}
+                </Link>
+              </span>
+            </div>
           )}
         </form>
       </CardContent>

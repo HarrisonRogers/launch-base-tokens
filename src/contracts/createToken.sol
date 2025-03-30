@@ -9,11 +9,12 @@ contract TokenFactory {
 
     event TokenCreated(address indexed tokenAddress, string name, string symbol, uint256 supply, address owner);
 
-    function createToken(string memory name, string memory symbol, uint256 supply) external {
+    function createToken(string memory name, string memory symbol, uint256 supply) external returns (address) {
         ERC20Token newToken = new ERC20Token(name, symbol, supply, msg.sender);
         deployedTokens.push(address(newToken));
         userTokens[msg.sender].push(address(newToken)); // Store token under user's address
         emit TokenCreated(address(newToken), name, symbol, supply, msg.sender);
+        return address(newToken);
     }
 
     function getDeployedTokens() external view returns (address[] memory) {

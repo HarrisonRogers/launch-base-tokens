@@ -30,8 +30,8 @@ function PaginatedTokens({ tokens }: { tokens: address[] | undefined }) {
 
   if (tokens.length === 0) {
     return (
-      <div className="text-center">
-        <h1>No tokens found</h1>
+      <div className="text-center mt-10">
+        <span>No tokens found</span>{' '}
         <Link href="/" className="underline hover:no-underline">
           Deploy a token here
         </Link>
