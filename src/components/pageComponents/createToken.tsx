@@ -11,7 +11,7 @@ import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { useWriteContract } from 'wagmi';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+
 const createTokenSchema = z.object({
   name: z.string().min(2, {
     message: 'Name must be at least 2 characters.',
@@ -37,7 +37,6 @@ const createTokenSchema = z.object({
 type FormSchema = z.infer<typeof createTokenSchema>;
 
 function CreateToken() {
-  const router = useRouter();
   const {
     writeContract,
     isPending,
@@ -68,10 +67,6 @@ function CreateToken() {
       console.log(error);
     }
   });
-
-  if (isSuccess) {
-    router.refresh();
-  }
 
   return (
     <Card>
@@ -125,7 +120,7 @@ function CreateToken() {
           {isSuccess && txHash && (
             <div className="flex flex-col gap-2">
               <span className="text-green-500">
-                Transaction submitted:{' '}
+                Transaction details:{' '}
                 <Link
                   href={`https://base-sepolia.blockscout.com/tx/${txHash}`}
                   target="_blank"
