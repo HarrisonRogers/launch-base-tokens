@@ -20,7 +20,7 @@ import {
 } from '../ui/pagination';
 
 type PaginatedTokensProps = {
-  tokens: address[] | undefined;
+  tokens: readonly address[];
 };
 
 const ITEMS_PER_PAGE = 5;

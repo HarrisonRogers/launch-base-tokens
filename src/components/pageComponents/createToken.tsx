@@ -3,7 +3,7 @@
 import React from 'react';
 import { z } from 'zod';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import TokenFactory from '@/lib/TokenFactory.json';
+import { abi } from '@/web3/abi';
 import { Input } from '../ui/input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,6 +11,7 @@ import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { useWriteContract } from 'wagmi';
 import Link from 'next/link';
+import { contractAddress } from '@/web3/address';
 
 const createTokenSchema = z.object({
   name: z.string().min(2, {
@@ -57,10 +58,10 @@ function CreateToken() {
   const onSubmit = handleSubmit((data) => {
     try {
       writeContract({
-        address: process.env.NEXT_PUBLIC_TOKEN_FACTORY_ADDRESS as `0x${string}`,
-        abi: TokenFactory.abi,
+        address: contractAddress,
+        abi: abi,
         functionName: 'createToken',
-        args: [data.name, data.symbol, data.supply],
+        args: [data.name, data.symbol, BigInt(data.supply)],
       });
       reset();
     } catch (error) {

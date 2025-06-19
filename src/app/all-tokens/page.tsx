@@ -9,7 +9,7 @@ function ViewAllTokensPage() {
   return (
     <div>
       <h1 className="text-center">All Tokens</h1>
-      <PaginatedTokens tokens={tokens} />
+      <PaginatedTokens tokens={tokens || []} />
     </div>
   );
 }

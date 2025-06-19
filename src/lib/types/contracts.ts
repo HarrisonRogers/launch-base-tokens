@@ -1,8 +1,10 @@
+import { abi } from '@/web3/abi';
+
 export type address = `0x${string}`;
 
 export type TokenFactoryContract = {
   address: address;
-  abi: typeof import('../TokenFactory.json')['abi'];
+  abi: typeof abi;
 };
 
 export type CreateTokenParams = {
