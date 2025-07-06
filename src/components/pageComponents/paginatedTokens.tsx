@@ -1,5 +1,5 @@
 import { address } from '@/lib/types/contracts';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Table,
   TableBody,
@@ -53,10 +53,26 @@ function PaginatedTokens({ tokens }: PaginatedTokensProps) {
     ? [...tokens].reverse().slice(startIndex, endIndex)
     : [];
 
-  // Handle page change
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+  // Handle page change with validation
+  const handlePageChange = useCallback((page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  }, [totalPages]);
+
+  // Handle previous page
+  const handlePreviousPage = useCallback(() => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  }, [currentPage]);
+
+  // Handle next page
+  const handleNextPage = useCallback(() => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  }, [currentPage, totalPages]);
 
   return (
     <div className="w-full">
@@ -74,6 +90,7 @@ function PaginatedTokens({ tokens }: PaginatedTokensProps) {
                   href={`https://base-sepolia.blockscout.com/address/${token}`}
                   className="underline hover:no-underline underline-offset-2"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {token}
                 </Link>
@@ -90,7 +107,10 @@ function PaginatedTokens({ tokens }: PaginatedTokensProps) {
             <PaginationItem>
               <PaginationPrevious
                 href="#"
-                onClick={() => handlePageChange(currentPage - 1)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePreviousPage();
+                }}
                 className={
                   currentPage === 1 ? 'pointer-events-none opacity-50' : ''
                 }
@@ -104,7 +124,10 @@ function PaginatedTokens({ tokens }: PaginatedTokensProps) {
                 <PaginationItem key={1}>
                   <PaginationLink
                     href="#"
-                    onClick={() => handlePageChange(1)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handlePageChange(1);
+                    }}
                     isActive={currentPage === 1}
                   >
                     1
@@ -131,7 +154,10 @@ function PaginatedTokens({ tokens }: PaginatedTokensProps) {
                   <PaginationItem key={i}>
                     <PaginationLink
                       href="#"
-                      onClick={() => handlePageChange(i)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePageChange(i);
+                      }}
                       isActive={currentPage === i}
                     >
                       {i}
@@ -155,7 +181,10 @@ function PaginatedTokens({ tokens }: PaginatedTokensProps) {
                   <PaginationItem key={totalPages}>
                     <PaginationLink
                       href="#"
-                      onClick={() => handlePageChange(totalPages)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePageChange(totalPages);
+                      }}
                       isActive={currentPage === totalPages}
                     >
                       {totalPages}
@@ -170,7 +199,10 @@ function PaginatedTokens({ tokens }: PaginatedTokensProps) {
             <PaginationItem>
               <PaginationNext
                 href="#"
-                onClick={() => handlePageChange(currentPage + 1)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNextPage();
+                }}
                 className={
                   currentPage === totalPages
                     ? 'pointer-events-none opacity-50'

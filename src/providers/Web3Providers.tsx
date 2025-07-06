@@ -9,10 +9,13 @@ import '@rainbow-me/rainbowkit/styles.css';
 // Create the query client outside of the component
 const queryClient = new QueryClient();
 
+// Get project ID from environment
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
+
 // Create the Wagmi config
 const config = getDefaultConfig({
   appName: 'Create Base Tokens',
-  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '',
+  projectId: projectId || 'fallback-project-id',
   chains: [baseSepolia],
   transports: {
     [baseSepolia.id]: http(),
@@ -20,6 +23,11 @@ const config = getDefaultConfig({
 });
 
 export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
+  // Warn if project ID is not set
+  if (!projectId) {
+    console.warn('NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID is not set. Wallet connectivity may be limited.');
+  }
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
