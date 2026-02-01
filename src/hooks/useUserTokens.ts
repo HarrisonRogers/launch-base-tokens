@@ -5,12 +5,16 @@ import { contractAddress } from '@/web3/address';
 
 export const useUserTokens = () => {
   const { address } = useAccount();
-  const { data: tokens } = useReadContract({
+  
+  const { data: tokens, error, isLoading } = useReadContract({
     address: contractAddress,
     abi: abi,
     functionName: 'getUserTokens',
     args: [address as `0x${string}`],
+    query: {
+      enabled: !!address, // Only run query when address is available
+    },
   });
 
-  return tokens;
+  return { tokens, error, isLoading };
 };

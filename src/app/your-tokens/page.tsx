@@ -3,8 +3,25 @@
 import React from 'react';
 import { useUserTokens } from '@/hooks/useUserTokens';
 import PaginatedTokens from '@/components/pageComponents/paginatedTokens';
+
 function ViewYourTokensPage() {
-  const tokens = useUserTokens();
+  const { tokens, error, isLoading } = useUserTokens();
+
+  if (isLoading) {
+    return (
+      <div className="text-center mt-10">
+        <span>Loading your tokens...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center mt-10 text-red-500">
+        <span>Error loading tokens: {error.message}</span>
+      </div>
+    );
+  }
 
   return (
     <div>

@@ -15,6 +15,39 @@ type TokenListProps = {
 };
 
 function TokenList({ title, tokens, deployed = true }: TokenListProps) {
+  const renderTokenRows = () => {
+    if (tokens?.length === 0) {
+      return (
+        <TableRow>
+          <TableCell className="text-center">No Tokens Found</TableCell>
+        </TableRow>
+      );
+    }
+
+    if (tokens === undefined) {
+      return (
+        <TableRow>
+          <TableCell className="text-center">Loading...</TableCell>
+        </TableRow>
+      );
+    }
+
+    return tokens.map((token: address) => (
+      <TableRow key={token}>
+        <TableCell>
+          <Link
+            href={`https://base-sepolia.blockscout.com/address/${token}`}
+            className="underline hover:no-underline underline-offset-2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {token}
+          </Link>
+        </TableCell>
+      </TableRow>
+    ));
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -28,29 +61,7 @@ function TokenList({ title, tokens, deployed = true }: TokenListProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tokens?.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={2}>No Tokens Found</TableCell>
-              </TableRow>
-            )}
-            {tokens === undefined && (
-              <TableRow>
-                <TableCell colSpan={2}>Loading...</TableCell>
-              </TableRow>
-            )}
-            {tokens?.map((token: address) => (
-              <TableRow key={token}>
-                <TableCell>
-                  <Link
-                    href={`https://base-sepolia.blockscout.com/address/${token}`}
-                    className="underline hover:no-underline underline-offset-2"
-                    target="_blank"
-                  >
-                    {token}
-                  </Link>
-                </TableCell>
-              </TableRow>
-            ))}
+            {renderTokenRows()}
             {tokens?.length > 0 && (
               <TableRow>
                 <TableCell>
